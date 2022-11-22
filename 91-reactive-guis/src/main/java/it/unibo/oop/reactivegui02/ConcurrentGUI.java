@@ -20,10 +20,24 @@ public final class ConcurrentGUI extends JFrame {
     private final JButton stop = new JButton("stop");
     private final JLabel display = new JLabel();
     private int counter = 0;
+    private volatile boolean counting = true;
+    private volatile boolean dirIsUp = true;
 
     public ConcurrentGUI() {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         display.setText(Integer.toString(counter));
+        new Thread(() -> {
+            while (counting) {
+                try {
+                    this.counter = (this.dirIsUp) ? this.counter + 1 : this.counter - 1;
+                    final String text = (double)this.counter / 100 + "";
+                    SwingUtilities.invokeAndWait(() -> this.display.setText(text));
+                    Thread.sleep(10);
+                } catch (Throwable e) {
+                    System.exit(1);
+                }
+            }
+        }).start();
         panel.add(display);
         panel.add(up);
         panel.add(down);
