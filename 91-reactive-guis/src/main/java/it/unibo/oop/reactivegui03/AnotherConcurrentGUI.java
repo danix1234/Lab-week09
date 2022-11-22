@@ -46,6 +46,14 @@ public final class AnotherConcurrentGUI extends JFrame {
                 }
             }
         }).start();
+        new Thread(() -> {
+            try {
+                Thread.sleep(10_000);
+                SwingUtilities.invokeAndWait(this::stopWorking);
+            } catch (Throwable e) {
+                System.exit(1);
+            }
+        }).start();
         panel.add(display);
         panel.add(up);
         panel.add(down);
@@ -68,6 +76,10 @@ public final class AnotherConcurrentGUI extends JFrame {
     }
 
     private void disable(Object o) {
+        this.stopWorking();
+    }
+
+    private void stopWorking(){
         this.counting = false;
         this.up.setEnabled(false);
         this.down.setEnabled(false);
