@@ -12,5 +12,6 @@ import javax.swing.SwingUtilities;
 /**
  * Second example of reactive GUI.
  */
+@SuppressWarnings("unused")
 public final class ConcurrentGUI extends JFrame {
 }
