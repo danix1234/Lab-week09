@@ -14,4 +14,22 @@ import javax.swing.SwingUtilities;
  */
 @SuppressWarnings("unused")
 public final class ConcurrentGUI extends JFrame {
+    private final JPanel panel = new JPanel();
+    private final JButton up = new JButton("up");
+    private final JButton down = new JButton("down");
+    private final JButton stop = new JButton("stop");
+    private final JLabel display = new JLabel();
+    private int counter = 0;
+
+    public ConcurrentGUI() {
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        display.setText(Integer.toString(counter));
+        panel.add(display);
+        panel.add(up);
+        panel.add(down);
+        panel.add(stop);
+        this.getContentPane().add(panel);
+        this.pack();
+        this.setVisible(true);
+    }
 }
